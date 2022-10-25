@@ -17,9 +17,12 @@ app.MapGet("/bingo/check/{thisnumb}", (int thisnumb) => checknumb(thisnumb));
 // 이제까지 무슨 숫자 나왔는지 체크 하려고 check what number are drawn so far
 app.MapGet("/bingo/view", () => drawlist());
 app.MapGet("/bingo/reset", () => deleteeverything());
+app.MapGet("/bingo/boolcheck/{checkcheck}", (int checkcheck) => Numcheck(checkcheck));
+app.MapGet("/bingo/check", (int cheknumb) => NumCheck(cheknumb));
 
-
-
+bool NumCheck(int cheknumb) {
+    return Bingonumbs.Contains(cheknumb);
+}
 
 int getNum()
 {
@@ -59,6 +62,12 @@ string checknumb(int thisnumb) {
         return "False";
     }
 }
+bool Numcheck(int checkcheck) {
+    return Bingonumbs.Contains(checkcheck);
+}
+
+
+
 List <int> drawlist () {
     return Bingonumbs; // print everything in Bingonumbs
 }
