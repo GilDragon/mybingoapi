@@ -27,7 +27,7 @@ string BingoNum2() // BingoNum은 string이야 하지만 int howmany를 포함�
 {
     for (int i = 0; i<= 100; i++)
     {
-        if (Bingonumbs.Count < 100) // Bingonumbs list에 있는 숫자들 개수보다 howmany 설정한 수가 적으면  if 고고 가야쥐
+        if (Bingonumbs.Count < 101) // if the numbers in Bingonums are less than 101 Do the if
         {
             Random rannumb = new Random(); //rannumb 랜덤넘버 생성? generate random number?
             var number = rannumb.Next(1, 101); // number라는 변수를 생성하는데 rannumb 1부터 100까지 생성 
