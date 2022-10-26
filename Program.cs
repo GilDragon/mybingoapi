@@ -13,15 +13,41 @@ app.MapGet("/factorial/{factnumb}", (int factnumb) => getNum4(factnumb));
 // Getnerate Factorial number by user's input number 52이상은 안됨 맞나? 너무 큰수 나오면 오류 뜸
 app.MapGet("/bingo/draw/{howmany}", (int howmany) => BingoNum(howmany));
 // 내가 원하는 수만큼 랜덤번호 만들기 generate random numbers how many times you want 원래 원했던건 100개 임
+app.MapGet("/bingo/draw", () => BingoNum2());
 app.MapGet("/bingo/check/{thisnumb}", (int thisnumb) => checknumb(thisnumb));
 // 이제까지 무슨 숫자 나왔는지 체크 하려고 check what number are drawn so far
 app.MapGet("/bingo/view", () => drawlist());
 app.MapGet("/bingo/reset", () => deleteeverything());
 app.MapGet("/bingo/boolcheck/{checkcheck}", (int checkcheck) => Numcheck(checkcheck));
-app.MapGet("/bingo/check", (int cheknumb) => NumCheck(cheknumb));
+app.MapGet("/bingo/check", (int checknumb) => NumCheck(checknumb)); //this is for web form
 
-bool NumCheck(int cheknumb) {
-    return Bingonumbs.Contains(cheknumb);
+
+string BingoNum2() // BingoNum은 string이야 하지만 int howmany를 포함하고 있지 howmany에 따라 값이 달라지나?
+// why do I have to int howmany in ()???? because howmany is user's input?
+{
+    for (int i = 0; i<= 100; i++)
+    {
+        if (Bingonumbs.Count < 100) // Bingonumbs list에 있는 숫자들 개수보다 howmany 설정한 수가 적으면  if 고고 가야쥐
+        {
+            Random rannumb = new Random(); //rannumb 랜덤넘버 생성? generate random number?
+            var number = rannumb.Next(1, 101); // number라는 변수를 생성하는데 rannumb 1부터 100까지 생성 
+
+            while (Bingonumbs.Contains(number)) //Bingonumbs에 있는 숫자들이랑 위에서 나온 random number랑 같다면 while 가야쥐
+            // if the number from random number already exists in Bingonumbs' list, then let's do while loop
+            {
+                number = rannumb.Next(1, 101); //random 넘버 생성하기 while loop에서
+            }
+            Bingonumbs.Add(number); //중복 된게 없다면 리스트에 추가 if number is not same as in bingonumbs' list then Add to the list
+            return $"the number {number.ToString()} has been added"; //number를 string으로 바꿔줘서 출력해야함 같이 쓰려면
+        }
+    
+    }
+    return $"100 numbers have been added.";
+
+}
+
+bool NumCheck(int checknumb) {
+    return Bingonumbs.Contains(checknumb);
 }
 
 int getNum()
